@@ -13,14 +13,17 @@ exports.up = function(knex) {
         steps.integer('step_number').notNullable();
         steps.string('instructions').notNullable().unique();
         steps.integer('recipe_id').notNullable()
-        .references('recipes.id');
+        .references('recipes.id')
+        .onUpdate('CASCADE').onDelete('RESTRICT');
     })
     .createTable('recipes_ingredients', reIN=>{
         reIN.increments();
         reIN.integer('recipe_id').notNullable()
         .references('recipes.id')
+        .onUpdate('CASCADE').onDelete('RESTRICT');
         reIN.integer('ingredient_id').notNullable()
         .references('ingredients.id')
+        .onUpdate('CASCADE').onDelete('RESTRICT');
         reIN.string('quantity').notNullable();
     })
 };
